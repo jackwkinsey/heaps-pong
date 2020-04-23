@@ -1,0 +1,30 @@
+{
+  "name": "heaps-pong",
+  "version": "1.0.0",
+  "description": "Simple Pong clone",
+  "main": "index.js",
+  "scripts": {
+    "lite": "lite-server index.html",
+    "start": "npm run lite"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jackwkinsey/heaps-pong.git"
+  },
+  "keywords": [
+    "heaps",
+    "haxe",
+    "game",
+    "development",
+    "pong"
+  ],
+  "author": "Jack Kinsey <jack.w.kinsey@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jackwkinsey/heaps-pong/issues"
+  },
+  "homepage": "https://github.com/jackwkinsey/heaps-pong#readme",
+  "dependencies": {
+    "lite-server": "^2.5.4"
+  }
+}
