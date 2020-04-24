@@ -2,9 +2,11 @@ import hxd.res.DefaultFont;
 import h2d.Font;
 import h2d.Text;
 import hxd.App;
+import Ball;
 
 class Main extends App {
 	var tf:Text;
+	var ball:Ball;
 
 	override function init() {
 		var font:Font = DefaultFont.get();
@@ -15,6 +17,12 @@ class Main extends App {
 		tf.y = 50;
 
 		s2d.addChild(tf);
+
+		this.ball = new Ball(s2d.width / 2, s2d.height / 2, 10, s2d);
+	}
+
+	override function update(dt:Float) {
+		ball.update(dt);
 	}
 
 	static function main() {
