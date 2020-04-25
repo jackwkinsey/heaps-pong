@@ -13,7 +13,7 @@ class Paddle extends Object {
 	var direction:Int = 0;
 	var playerPosition:Position;
 	var brain:Brain;
-	var ball:Object;
+	var ball:Ball;
 
 	public function new(playerPosition:Position, brain:Brain, ?parent:Object) {
 		super(parent);
@@ -25,7 +25,7 @@ class Paddle extends Object {
 		rotation = Math.PI / 2;
 
 		// @warn This will necessitate that the ball is instantiated BEFORE the paddle. Consider another approach.
-		ball = parent.getScene().getObjectByName('BALL');
+		ball = cast(parent.getScene().getObjectByName('BALL'), Ball);
 
 		var color:Int = playerPosition == Position.ONE ? 0x00BFFF : 0xFF1493;
 		CreateGraphic(color, width, height);
@@ -38,6 +38,7 @@ class Paddle extends Object {
 		bmp.y = y;
 
 		CheckWallCollisions();
+		CheckBallCollisions();
 	}
 
 	private function GetDirection() {
@@ -81,6 +82,22 @@ class Paddle extends Object {
 
 		if (y + height / 2 > parent.getScene().height) {
 			y = parent.getScene().height - height / 2;
+		}
+	}
+
+	private function CheckBallCollisions() {
+		var deltaX:Float = ball.x - x;
+		var deltaY:Float = ball.y - y;
+
+		if (Math.abs(deltaX) < width / 2 + ball.size / 2 && Math.abs(deltaY) < height / 2 + ball.size / 2) {
+			// Make sure ball doesn't get stuck in paddle
+			if (playerPosition == Position.ONE) {
+				ball.x = x - width / 2 - ball.size / 2;
+			} else {
+				ball.x = x + width / 2 + ball.size / 2;
+			}
+
+			ball.Bounce();
 		}
 	}
 
