@@ -3,7 +3,10 @@ import h2d.Tile;
 import h2d.Bitmap;
 
 class Ball extends Object {
+	public var size:Int;
+
 	var speed:Float;
+	var maxSpeed:Float;
 	var spawnTimer:Float;
 	var bmp:Bitmap;
 
@@ -12,7 +15,9 @@ class Ball extends Object {
 		name = 'BALL';
 		this.x = x;
 		this.y = y;
+		this.size = size;
 		this.speed = speed;
+		this.maxSpeed = speed * 2;
 		spawnTimer = 3;
 		CreateGraphic(0xFFFFFF, size);
 
@@ -31,6 +36,21 @@ class Ball extends Object {
 		bmp.y = y;
 
 		CheckWallCollisions();
+	}
+
+	public function Bounce() {
+		speed += 0.2;
+		if (speed > maxSpeed) {
+			speed = maxSpeed;
+		}
+
+		if (rotation > 0) {
+			rotation -= Math.PI;
+		} else {
+			rotation += Math.PI;
+		}
+
+		rotation = -rotation;
 	}
 
 	private function CreateGraphic(color:Int, width:Int, ?height:Int) {
