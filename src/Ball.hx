@@ -9,6 +9,7 @@ class Ball extends Object {
 
 	public function new(x:Float, y:Float, size:Int, ?moveRight:Bool = true, ?speed:Float = 1, ?parent:Object) {
 		super(parent);
+		name = 'BALL';
 		this.x = x;
 		this.y = y;
 		this.speed = speed;
