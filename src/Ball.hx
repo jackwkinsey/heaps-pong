@@ -13,7 +13,7 @@ class Ball extends Object {
 		this.y = y;
 		this.speed = speed;
 		spawnTimer = 3;
-		CreateGraphic(0xFFFFFF, size, parent);
+		CreateGraphic(0xFFFFFF, size);
 
 		var moveUp:Bool = Math.floor(Math.random() * 2) > 0;
 		ChooseDirection(moveRight, moveUp);
@@ -28,9 +28,11 @@ class Ball extends Object {
 		move(speed, -speed);
 		bmp.x = x;
 		bmp.y = y;
+
+		CheckWallCollisions();
 	}
 
-	private function CreateGraphic(color:Int, width:Int, ?height:Int, ?parent:Object) {
+	private function CreateGraphic(color:Int, width:Int, ?height:Int) {
 		if (height == null) {
 			height = width;
 		}
@@ -53,9 +55,41 @@ class Ball extends Object {
 			degrees = randomNumber + 135;
 		}
 
-		rotation = degrees * Math.PI / 180;
-
 		if (!moveUp) {
+			degrees = -degrees;
+		}
+
+		rotation = degrees * Math.PI / 180;
+	}
+
+	private function CheckWallCollisions() {
+		var absRotation = Math.abs(rotation);
+
+		if (x > parent.getScene().width && absRotation >= 0 && absRotation <= Math.PI / 4) {
+			if (rotation > 0) {
+				rotation -= Math.PI;
+			} else {
+				rotation += Math.PI;
+			}
+
+			rotation = -rotation;
+		}
+
+		if (x < 0 && absRotation >= 3 * Math.PI / 4 && absRotation <= Math.PI) {
+			if (rotation > 0) {
+				rotation -= Math.PI;
+			} else {
+				rotation += Math.PI;
+			}
+
+			rotation = -rotation;
+		}
+
+		if (y < 0 && rotation > 0) {
+			rotation = -rotation;
+		}
+
+		if (y > parent.getScene().height && rotation < 0) {
 			rotation = -rotation;
 		}
 	}
